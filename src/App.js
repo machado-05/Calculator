@@ -14,7 +14,7 @@ function App() {
       <div>
         <div className="calculator">
           <div className="formula"></div>
-          <div className="output" id="display" style={{ fontSize: calculateFontSize() }}>
+          <div className="output" id="display">
             {displayText}
           </div>
           <div className="buttons-container">
