@@ -1,19 +1,33 @@
 
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
 .App {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f0f0;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .calculator {
   width: 320px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #c0c0c0;
   padding: 20px;
+}
+
+.formula {
+  display: flex;
+  justify-content: right;
+  
 }
 
 .output {
@@ -27,12 +41,12 @@
   min-height: 40px;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow:ell;
+  text-overflow: ellipsis;
 }
 
 .buttons-container {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 5px;
 }
 
@@ -47,25 +61,24 @@
 }
 
 .btn:hover {
-  background-color: #ddd;
+  background-color: #666;
 }
 
 .btn:active {
-  background-color: #ccc;
+  background-color: #333;
 }
 
 .clear {
-  background-color: rgb(172,57,57);
+  background-color: #ee152b;
 }
 
-/*change this color to a darker red*/
 .clear:hover {
-  background-color: #f5c6cb;
+  background-color:  rgb(172, 57, 57);
 }
 
 .decimal {
-  font-size: 2rem; 
-  padding: 25px; 
+  font-size: 2rem;
+  padding: 25px;
 }
 
 .zero {
@@ -106,7 +119,10 @@ button:focus {
   background-color: #ffc107;
 }
 
-.divide:hover, .multiply:hover, .add:hover, .subtract:hover {
+.divide:hover,
+.multiply:hover,
+.add:hover,
+.subtract:hover {
   background-color: #e0a800;
 }
 
@@ -116,7 +132,3 @@ button:focus {
   font-size: 1rem;
   color: #888;
 }
-
-
-
-
