@@ -1,5 +1,89 @@
+
 .App {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.calculator {
+  width: 320px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  background-color: #c0c0c0;
+  padding: 20px;
+}
+
+.output {
+  background-color: #333;
+  color: #fff;
+  font-size: 2rem;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: right;
+  margin-bottom: 10px;
+  min-height: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ell;
+}
+
+.buttons-container {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 5px;
+}
+
+.btn {
+  background-color: #4d4d4d;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  padding: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: #ddd;
+}
+
+.btn:active {
+  background-color: #ccc;
+}
+
+.clear {
+  background-color: rgb(172,57,57);
+}
+
+/*change this color to a darker red*/
+.clear:hover {
+  background-color: #f5c6cb;
+}
+
+.decimal {
+  font-size: 2rem; 
+  padding: 25px; 
+}
+
+.zero {
+  grid-column: span 2;
+}
+
+.equals {
+  background-color: #28a745;
+  color: #fff;
+  grid-column: span 2;
+}
+
+.equals:hover {
+  background-color: #218838;
+}
+
+.subtract {
+  grid-row: span 2;
 }
 
 button {
@@ -17,4 +101,22 @@ button:active {
 button:focus {
   outline: none;
 }
+
+.divide, .multiply, .add, .subtract {
+  background-color: #ffc107;
+}
+
+.divide:hover, .multiply:hover, .add:hover, .subtract:hover {
+  background-color: #e0a800;
+}
+
+.author {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1rem;
+  color: #888;
+}
+
+
+
 
