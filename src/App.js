@@ -1,6 +1,6 @@
 import './App.css';
-import { useState, useEffect } from 'react';
-import {evaluate} from 'mathjs';
+import { useState } from 'react';
+import { evaluate } from 'mathjs';
 
 function App() {
   const [displayText, setDisplayText] = useState('0');
@@ -8,57 +8,76 @@ function App() {
   const [formula, setFormula] = useState('');
   const [lastAction, setLastAction] = useState(null);
   const MAX_DIGITS = 22;
-
+  const DECIMAL_PLACES = 10; // Number of decimal places for rounding
 
   const handleNumber = (event) => {
     const value = event.target.textContent;
 
     if (displayText.length < MAX_DIGITS) {
-      if (displayText === '0' && value !== '.') {
-        setDisplayText(value);
-        setExpression(value);
-        setFormula(value);
+      if (displayText === '0' || displayText === 'Error') {
+        if (value === '.') {
+          setDisplayText('0.');
+          setExpression('0.');
+        } else {
+          setDisplayText(value);
+          setExpression(value);
+        }
       } else {
         const isDecimal = value === '.';
         const lastNumber = expression.split(/[\+\-\*\/]/).pop();
         if (isDecimal && lastNumber.includes('.')) return;
+
         setDisplayText(displayText + value);
         setExpression(expression + value);
-        setFormula(formula + value);
       }
+      setFormula(formula + value);
+      setLastAction(null);
     }
-    setLastAction('number');
   };
 
   const handleOperator = (event) => {
     const value = event.target.textContent;
     let newExpression = expression;
-
+    // If the last action was '=', start a new expression with the previous result
     if (lastAction === '=') {
-      newExpression = displayText;
-      setFormula(`${displayText} ${value}`);
-    } else {
-      if (['+', '-', '*', '/'].includes(newExpression.slice(-1))) {
-        newExpression = newExpression.slice(0, -1);
-      }
-      setFormula(formula + value);
+      newExpression = displayText; // Start with the last result
     }
-    setDisplayText(value);
-    setExpression(newExpression + value);
-    setLastAction('operator');
+    // Prevent multiple consecutive operators
+    if (['+', '*', '/', '-'].includes(newExpression.slice(-1))) {
+      if (value === '-') {
+        // Handle negative sign
+        if (displayText === '0' || displayText === '' || /[\+\-\*\/]$/.test(newExpression)) {
+          setDisplayText(value);
+          newExpression = newExpression + value;
+        }
+      } else {
+        // Replace last operator with new operator
+        newExpression = newExpression.slice(0, -1) + value;
+        setDisplayText(value);
+      }
+    } else {
+      // Append new operator
+      setDisplayText(value);
+      newExpression = newExpression + value;
+    }
+
+    setExpression(newExpression);
+    setFormula(formula + ' ' + value);
+    setLastAction(value);
   };
 
   const handleEquals = () => {
     try {
       const result = evaluate(expression);
-      setDisplayText(formatNumber(result));
-      setExpression(result.toString());
-      setFormula(`${formula} = ${formatNumber(result)}`);
+      const formattedResult = formatNumber(result);
+      setDisplayText(formattedResult);
+      setExpression(formattedResult);
+      setFormula(`${formula} = ${formattedResult}`);
       setLastAction('=');
     } catch (error) {
       setDisplayText('Error');
+      setExpression('');
       setFormula('Error');
-      setLastAction('error');
     }
   };
 
@@ -70,8 +89,8 @@ function App() {
   };
 
   const formatNumber = (number) => {
-    if (!isFinite(number)) return 'Error';
-    return Number(number).toFixed(10).replace(/\.?0+$/, '');
+    if (!isFinite(number) || isNaN(number)) return 'Error';
+    return Number(number.toFixed(DECIMAL_PLACES)).toString();
   };
 
   return (
