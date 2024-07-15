@@ -7,7 +7,6 @@ function App() {
 
   const handleNumber = (event) => {
     const number = event.target.textContent;
-    setDis
   }
 
   return (
